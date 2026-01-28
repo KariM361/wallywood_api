@@ -1,0 +1,29 @@
+@use "../../styles/globals" as *;
+
+.homePageImage {
+  height: 30vh;
+  width: 100%;
+  object-fit: cover;
+}
+.homebutton {
+  background-color: $color_beige;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 16px;
+  top: 652px;
+  left: 360px;
+  width: 73px;
+  height: 22px;
+}
+.mainCard {
+display: flex;
+flex-direction: row;
+}
+.cardImage {
+display: grid;
+grid-template-columns: 1fr 4fr;
+
+}
+.textCard {
+padding: 10px;
+margin: auto;
+}
