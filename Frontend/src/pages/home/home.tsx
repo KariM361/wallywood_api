@@ -5,6 +5,7 @@ import style from './home.module.scss'
 import type { MovieData } from '../../types/movieTypes'
 import parse from 'html-react-parser'
 
+
 export function Home() {
   const [movieData, setMovieData] = useState<Array<MovieData>>()
 
