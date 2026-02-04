@@ -6,8 +6,8 @@ import style from './Grid.module.scss'
 // gap: Afstand mellem grid items i pixels
 // children: Indholdet som skal vises i gridet
 interface GridProps {
-  gtr?: number
-  gtc?: number
+  gtr?: number | string
+  gtc?: number | string
   gap: number
   children: React.ReactNode
 }
@@ -17,17 +17,34 @@ export function Grid({ gtr, gtc, gap, children }: GridProps) {
   // Variabel til at holde dynamiske CSS styles
   let cName
 
+  // Hvis gtc er string, behandl det som CSS-værdi direkte (fx "1fr 4fr")
+  // Hvis gtc er number, brug repeat syntax (fx repeat(3, 1fr))
+  const getGridColumn = (value?: number | string) => {
+    if (typeof value === 'string') return value
+    if (typeof value === 'number') return `repeat(${value}, 1fr)`
+    return undefined
+  }
+
+  const getGridRow = (value?: number | string) => {
+    if (typeof value === 'string') return value
+    if (typeof value === 'number') return `repeat(${value}, 1fr)`
+    return undefined
+  }
+
+  const gridTemplateColumns = getGridColumn(gtc)
+  const gridTemplateRows = getGridRow(gtr)
+
   // Hvis både rækker og kolonner er specificeret - brug begge
-  if (gtc && gtr) {
-    cName = { gridTemplateColumns: `repeat(${gtc}, 1fr)`, gridTemplateRows: `repeat(${gtr}, 1fr)`, gap: gap + 'px' }
+  if (gridTemplateColumns && gridTemplateRows) {
+    cName = { gridTemplateColumns, gridTemplateRows, gap: gap + 'px' }
   } 
   // Hvis kun kolonner er specificeret
-  else if (gtc) {
-    cName = { gridTemplateColumns: `repeat(${gtc}, 1fr)`, gap: gap + 'px' }
+  else if (gridTemplateColumns) {
+    cName = { gridTemplateColumns, gap: gap + 'px' }
   } 
   // Hvis kun rækker er specificeret
-  else if (gtr) {
-    cName = { gridTemplateRows: `repeat(${gtr}, 1fr)`, gap: gap + 'px' }
+  else if (gridTemplateRows) {
+    cName = { gridTemplateRows, gap: gap + 'px' }
   } 
   // Default: items flyder horisontalt uden fast layout
   else {

@@ -1,18 +1,39 @@
 import { Poster } from '../../Components/Poster/Poster'
+import { Grid } from '../../Components/Grid/Grid'
 import { useFetch } from '../../hooks/useFetch'
 import { useState } from 'react'
 import type { MovieData } from '../../types/movieTypes'
-import { Grid } from '../../Components/Grid/Grid'
+import { GenreSelect } from '../../Components/GenreSelect/GenreSelect'
+import { Title } from '../../Components/Title/Title'
 import { Dropdown } from '../../Components/Dropdown/Dropdown'
-import style from '../posters/posters.module.scss'
 
 export function Posters() {
-  const [selectedGenre, setSelectedGenre] = useState('komedie')
-  const [SelectedSort, setSelectedSort] = useState('asc')
+  const [selectedGenre, setSelectedGenre] = useState<string>('komedie')
+  const [selectedSort, setSelectedSort] = useState<string>('asc')
+
+  // Initialiser variabler til sortering
+  let sort_Key = 'random'
+  let sort_Direction = 'asc'
+
+  // Hvis selectedSort er "name", så sæt sort_Key til 'name' og ellers sæt den til 'random'
+  if (selectedSort === 'name') {
+    sort_Key = 'name'
+  } else {
+    sort_Key = 'random'
+  }
+
+  // Hvis selectedSort er 'asc' eller 'desc' så sæt sort_Direction til at være selectedSort (asc/desc)
+  // Og sæt sort_Key til 'price'
+  if (selectedSort === 'asc' || selectedSort === 'desc') {
+    sort_Direction = selectedSort
+    sort_Key = 'price'
+  }
 
   const { data, isLoading, error } = useFetch<Array<MovieData>>(
-    `http://localhost:3000/posters/list_by_genre/${selectedGenre}`,
+    `http://localhost:3000/posters/list_by_genre/${selectedGenre}?sort_key=${sort_Key}&sort_direction=${sort_Direction}`,
   )
+
+  console.log('data', data)
 
   if (isLoading) {
     return <h1>Loading data......</h1>
@@ -24,27 +45,25 @@ export function Posters() {
 
   return (
     <>
+      <Title text='Posters'></Title>
       <Dropdown setSelectedSort={setSelectedSort} />
-      <h1><b>Plakater</b></h1>
-      <h3><b>Filtre</b></h3>
-      <ul className={style.genreSort}>
-        <p>Genre</p>
-        <li onClick={() => setSelectedGenre('drama')}>Drama</li>
-        <li onClick={() => setSelectedGenre('gysere')}>Gyser</li>
-        <li onClick={() => setSelectedGenre('adventure')}>Adventure</li>
-        <li onClick={() => setSelectedGenre('dokumentar')}>Dokumentar</li>
-        <li onClick={() => setSelectedGenre('karatefilm')}>karatefilm</li>
-        <li onClick={() => setSelectedGenre('komedie')}>Komedie</li>
-        <li onClick={() => setSelectedGenre('Krigsfilm')}>Krigsfilm</li>
-        <li onClick={() => setSelectedGenre('krimi-Thriller')}>Krimi-Thriller</li>
-        <li onClick={() => setSelectedGenre('action')}>Action</li>
-
-
-      </ul>
-      <Grid gtc={3} gtr={3} gap={32}>
-        {data?.map((item) => {
-          return <Poster imageUrl={item.image} id={item.id} genres={item.genres} title={item.name} />
-        })}
+      <Grid gap={32} gtc={'1fr 4fr'}>
+        <GenreSelect setSelectedGenre={setSelectedGenre} />
+        <Grid gtc={'1fr 1fr 1fr'} gap={32}>
+          {data?.map((item) => {
+            return (
+              <Poster
+                slug={item.slug}
+                key={item.id}
+                price={item.price}
+                imageUrl={item.image}
+                id={item.id}
+                genres={item.genres}
+                title={item.name}
+              />
+            )
+          })}
+        </Grid>
       </Grid>
     </>
   )
