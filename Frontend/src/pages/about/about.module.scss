@@ -1,0 +1,48 @@
+@use '../../style/globals.scss' as globals;
+
+.aboutGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 40px 0;
+}
+
+/* venstre side (tekst) */
+.textSection {
+  color: globals.$colorlightBlack;
+
+  p {
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+}
+
+/* højre side (billede) */
+.imageSection {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* selve billedet */
+.starImg {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* mobil */
+@media (max-width: 768px) {
+  .aboutGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .imageSection {
+    justify-content: center;
+  }
+
+  .starImg {
+    max-width: 100%;
+  }
+}

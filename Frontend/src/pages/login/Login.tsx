@@ -3,6 +3,7 @@ import { Grid } from '../../Components/Grid/Grid'
 import { Input } from '../../Components/Input/Input'
 import { Submit } from '../../Components/Submit/Submit'
 import { AuthContext } from '../../context/AuthContext'
+import '../../styles/_globals.scss'
 
 export function Login() {
   const [error, setError] = useState<string | null>(null)
