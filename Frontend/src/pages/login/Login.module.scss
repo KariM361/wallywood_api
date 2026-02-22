@@ -1,0 +1,42 @@
+
+@use '../../styles/globals' as globals;
+
+.formContainer {
+ font-family: "Open Sans", sans-serif;
+  display: flex;
+  justify-content: left;
+  margin: 20px;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  padding: 12px;
+  border-radius: 12px;
+  background-color:#f5f5f5;
+  font-family: "Open Sans", sans-serif;
+  gap: 16px;
+}
+
+.button {
+  padding: 6px 12px; 
+  font-size: 0.9rem; 
+  border: none;  
+  border-radius: 6px;
+  font-weight: bold;
+  background-color: globals.$color_beige;
+  color: globals.$color_black;
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+

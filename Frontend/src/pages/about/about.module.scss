@@ -1,16 +1,6 @@
-@use '../../style/globals.scss' as globals;
-
-.aboutGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: center;
-  padding: 40px 0;
-}
-
 /* venstre side (tekst) */
 .textSection {
-  color: globals.$colorlightBlack;
+
 
   p {
     margin-bottom: 16px;

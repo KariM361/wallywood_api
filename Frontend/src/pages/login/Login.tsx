@@ -3,29 +3,31 @@ import { Grid } from '../../Components/Grid/Grid'
 import { Input } from '../../Components/Input/Input'
 import { Submit } from '../../Components/Submit/Submit'
 import { AuthContext } from '../../context/AuthContext'
-import '../../styles/_globals.scss'
+import style from './Login.module.scss'
+import { Title } from '../../Components/Title/Title'
+
 
 export function Login() {
   const [error, setError] = useState<string | null>(null)
   const { userData, setUserData } = useContext(AuthContext)
 
-  function postLogin(e: SubmitEvent) {
+  function postLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    // Gem input values
-    const form = e.target as HTMLFormElement
-    const userName = form.email.value
-    const passWord = form.password.value
 
-    // Opret body (URLSearchParams)
+    //Gem input values
+    const form = e.currentTarget
+    const userName = (form.brugernavn as HTMLInputElement).value
+    const passWord = (form.password as HTMLInputElement).value
+    //Opret body (URLSearchParamms)
     const body = new URLSearchParams()
 
-    // append input values til body
-    body.append('username', userName)
+    //Append input values til body
+    body.append('brugernavn', userName)
     body.append('password', passWord)
 
     const url = 'http://localhost:3000/login'
 
-    // POST body til backend server og håndter response (success/error)
+    //POST body til backend server og håndter response (success/error)
     fetch(url, { method: 'POST', body: body })
       .then((res) => res.json())
       .then((data) => {
@@ -33,28 +35,33 @@ export function Login() {
         setError('')
       })
       .catch((error) => {
-        console.error('Error logging in: ', error)
+        console.error('Error loggin in: ', error);
         setError('Der opstod en fejl - prøv igen')
+
       })
+
   }
 
-  console.log('UserData: ', userData)
+  console.log('UserData: ', userData);
 
   return (
     <>
       {userData && (
-        <b>
-          Velkommen {userData.user.firstname} {userData.user.lastname}
-        </b>
+        <b>className={style.welcome}
+        Velkommen {userData.user.firstname} {userData.user.lastname}</b>
       )}
-      {error && <b>{error}</b>}
-      <form style={{ width: '30vw' }} onSubmit={(e) => postLogin(e)}>
-        <Grid gtc={1} gap={8}>
-          <Input type='email' name='email' label='Email' />
-          <Input type='password' name='password' label='Password' />
-          <Submit value='Login' />
+      {error && <b className={style.error}>{error}</b>}
+       <Title text={'Login'} />
+      
+      <div className={style.formContainer}>
+      <form  className={style.contactForm} onSubmit={(e) => postLogin(e)}>
+        <Grid gtr={'1fr 1fr 1fr'} gap={8}>
+          <Input type="text" name="brugernavn" label="Brugernavn"></Input>
+          <Input type="password" name="password" label="Password"></Input>
+          <Submit className={style.button} value="Login"></Submit>
         </Grid>
       </form>
+      </div>
     </>
   )
 }

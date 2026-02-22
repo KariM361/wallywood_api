@@ -1,9 +1,14 @@
-import style from './Submit.module.scss'
-
-interface submitProps {
+type SubmitProps = {
   value: string
+  className?: string
 }
 
-export function Submit({ value }: submitProps) {
-  return <input className={style.submitButton} type={'submit'} value={value}></input>
+export function Submit({ value, className }: SubmitProps) {
+  return (
+    <input
+      type="submit"
+      value={value}
+      className={className} 
+    />
+  )
 }

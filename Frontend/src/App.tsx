@@ -5,6 +5,7 @@ import { MainLayout } from './layouts/MainLayout'
 import { Posters } from './pages/posters/posters'
 import { Login } from './pages/login/Login'
 import { Details } from './pages/detrails/Details'
+import { ContactForm } from './pages/contact/ContactForm'
 
 function App() {
   // Details siden har fået et query param på. Dette gøres med /:slug på enden af en url.
@@ -20,7 +21,7 @@ function App() {
             <Route path='/about' element={<About />} />
             <Route path='/posters' element={<Posters />} />
             <Route path='/details/:slug' element={<Details />} />
-            <Route path='/contact' element={<div>Contact</div>} />
+            <Route path='/contact' element={<ContactForm/>} />
             <Route path='/login' element={<Login />} />
           </Route>
         </Routes>
