@@ -14,20 +14,20 @@ export function Login() {
   function postLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
-    //Gem input values
+    //input values
     const form = e.currentTarget
     const userName = (form.brugernavn as HTMLInputElement).value
     const passWord = (form.password as HTMLInputElement).value
-    //Opret body (URLSearchParamms)
+    //(URLSearchParamms)
     const body = new URLSearchParams()
 
-    //Append input values til body
+    //Append input values to body
     body.append('brugernavn', userName)
     body.append('password', passWord)
 
     const url = 'http://localhost:3000/login'
 
-    //POST body til backend server og håndter response (success/error)
+    //POST body til backend server and handle responce (success/error)
     fetch(url, { method: 'POST', body: body })
       .then((res) => res.json())
       .then((data) => {
@@ -36,7 +36,7 @@ export function Login() {
       })
       .catch((error) => {
         console.error('Error loggin in: ', error);
-        setError('Der opstod en fejl - prøv igen')
+        setError('something went wrong- prøv igen')
 
       })
 
