@@ -1,4 +1,5 @@
 type SubmitProps = {
+  label: string
   value: string
   className?: string
 }

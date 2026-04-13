@@ -1,17 +1,16 @@
-import style from './Input.module.scss'
 
 interface inputProps {
-  label: string
+  label:string
   type: string
   name: string
   value?: string
 }
 
-export function Input({ label, type, name }: inputProps) {
+export function Input({label, type, name }: inputProps) {
   return (
-    <label className={style.inputStyle}>
+    <label>
       {label}
-      <input type={type} name={name} placeholder={`Indtast ${name}`}></input>
+            <input type={type} name={name} placeholder={`Indtast ${name}`}></input>
     </label>
   )
 }
